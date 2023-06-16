@@ -1,0 +1,768 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package form_main;
+
+
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.awt.HeadlessException;
+import java.sql.Connection;
+import javax.swing.table.DefaultTableModel;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import javax.swing.JOptionPane;
+import com.sun.glass.events.KeyEvent;
+import java.text.NumberFormat;
+import java.util.HashMap;
+import java.util.Locale;
+import javax.swing.event.DocumentEvent;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.view.JasperViewer;
+import report.koneksilaporan;
+
+
+/**
+ *
+ * @author Asus
+ */
+public class form_bayar_kredit extends javax.swing.JPanel {
+
+    private String lama_cicilan,keterangan,kodebayar5,kodekredit5;
+    private int harga,sisa,sisa2,uang_muka,cicilan,jumlah_unit,total_bayar,angsuran,angsuran_tlh_byr,angsuran_next,pembayaran;   
+    
+    ResultSet rsanggota=null;
+    ResultSet rsbarang=null;
+    ResultSet rskredit=null;
+    ResultSet rstunai=null;
+    
+    NumberFormat nf = NumberFormat.getNumberInstance(new Locale("in","ID"));
+
+    /**
+     * Creates new form form_bayar_kredit
+     */
+    public form_bayar_kredit() {
+        initComponents();
+        tampil_kredit();
+        kosongkan_form();
+        otomatis();
+        setTanggal();
+        
+        btncetak.setEnabled(false);
+        btnhapus.setEnabled(false);
+        btnbayar.setEnabled(true);
+    }
+        
+   
+    
+                
+    public void setTanggal(){
+      java.util.Date tgl = new java.util.Date();
+        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+        tanggall.setText(format.format(tgl));
+    }
+    
+    public void otomatis(){
+        
+        try{
+            Connection conn = (Connection)koneksi.configDB();
+            Statement stt = conn.createStatement();
+            ResultSet rs = stt.executeQuery("Select Max(Right(kode_bayar,4)) as no from kredit");
+            
+            
+            while (rs.next()) {
+                if (rs.first() == false) {
+                    txtkodebayar5.setText("KBK-0001");
+                } else {
+                    rs.last();
+                    int auto_id = rs.getInt(1) + 1;
+                    String no = String.valueOf(auto_id);
+                    int NomorJual = no.length();
+                    //MENGATUR jumlah 0
+                    for (int j = 0; j < 4 - NomorJual; j++) {
+                        no = "0" + no;
+                    }
+                    txtkodebayar5.setText("KBK-" + no);
+                }
+            }
+            rs.close();
+            stt.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "ERROR: \n" + e.toString(),
+                    "Kesalahan", JOptionPane.WARNING_MESSAGE);
+        }
+    }
+    
+    private void tampil_kredit(){
+          
+           DefaultTableModel model = new DefaultTableModel();
+           model.addColumn("No. ");
+           model.addColumn("Kode Bayar. ");
+           model.addColumn("Tanggal. ");
+           model.addColumn("Kode Kredit. ");
+           model.addColumn("Lama Cicil. ");
+           model.addColumn("Bayar. ");
+           model.addColumn("Sisa. ");
+           model.addColumn("Keterangan. ");
+           model.addColumn("Angsuran. ");
+           
+           try{
+            int no = 1;
+            String sql = "SELECT * FROM kredit";
+            java.sql.Connection conn = (Connection)koneksi.configDB();
+            java.sql.Statement stm = conn.createStatement();
+            java.sql.ResultSet res = stm.executeQuery(sql);
+            
+            while(res.next()){
+                model.addRow(new Object[]{no++,res.getString(1),res.getString(2),res.getString(3),res.getString(6),res.getString(7),res.getString(8),res.getString(9),res.getString(10)}); 
+            
+            tabelkredit.setModel(model); 
+            }
+                
+           }catch (SQLException e){
+               System.out.println("Error :"+ e.getMessage());
+           }
+       }
+    
+    private void kosongkan_form(){
+    //form kredit
+        txtkodebayar5.setEditable(true);
+        txtkodebayar5.setText(null);
+        tanggall.setText(null);
+        txtkodekredit5.setText(null);
+        txtkodeanggota5.setText(null);
+        txtkodebarang5.setText(null);
+        txtangsuran5.setText(null);
+        txtangsuran25.setText(null);
+        txtangsuran35.setText(null);
+        txtpembayaran5.setText(null);
+        txtsisa5.setText(null);
+        txtketerangan5.setText(null);
+}
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        jLabel10 = new javax.swing.JLabel();
+        jPanel8 = new javax.swing.JPanel();
+        jPanel7 = new javax.swing.JPanel();
+        jLabel57 = new javax.swing.JLabel();
+        txtpembayaran5 = new javax.swing.JTextField();
+        jLabel58 = new javax.swing.JLabel();
+        txtsisa5 = new javax.swing.JTextField();
+        jLabel59 = new javax.swing.JLabel();
+        txtketerangan5 = new javax.swing.JTextField();
+        jLabel60 = new javax.swing.JLabel();
+        btnbayar = new javax.swing.JButton();
+        txtangsuran35 = new javax.swing.JTextField();
+        btnhapus = new javax.swing.JButton();
+        btncetak = new javax.swing.JButton();
+        jPanel5 = new javax.swing.JPanel();
+        jLabel51 = new javax.swing.JLabel();
+        txtkodekredit5 = new javax.swing.JTextField();
+        jLabel52 = new javax.swing.JLabel();
+        txtkodeanggota5 = new javax.swing.JTextField();
+        jLabel53 = new javax.swing.JLabel();
+        txtkodebarang5 = new javax.swing.JTextField();
+        jLabel55 = new javax.swing.JLabel();
+        jLabel56 = new javax.swing.JLabel();
+        txtangsuran5 = new javax.swing.JTextField();
+        txtangsuran25 = new javax.swing.JTextField();
+        jLabel50 = new javax.swing.JLabel();
+        txtkodebayar5 = new javax.swing.JTextField();
+        jLabel54 = new javax.swing.JLabel();
+        tanggall = new javax.swing.JLabel();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        tabelkredit = new javax.swing.JTable();
+
+        setBackground(new java.awt.Color(204, 255, 204));
+
+        jLabel10.setFont(new java.awt.Font("Tw Cen MT", 1, 24)); // NOI18N
+        jLabel10.setText("BAYAR CICILAN");
+
+        jPanel8.setBackground(new java.awt.Color(255, 255, 204));
+        jPanel8.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, java.awt.Color.white, java.awt.Color.white));
+
+        jPanel7.setBackground(new java.awt.Color(255, 255, 204));
+        jPanel7.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, java.awt.Color.white, java.awt.Color.white));
+
+        jLabel57.setText("Pembayaran");
+
+        jLabel58.setText("Sisa");
+
+        jLabel59.setText("Keterangan");
+
+        jLabel60.setFont(new java.awt.Font("Tahoma", 2, 11)); // NOI18N
+        jLabel60.setText("Bayar Angsuran yang ke-");
+
+        btnbayar.setText("BAYAR");
+        btnbayar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnbayarActionPerformed(evt);
+            }
+        });
+
+        txtangsuran35.setEditable(false);
+        txtangsuran35.setBackground(new java.awt.Color(204, 204, 204));
+
+        btnhapus.setText("HAPUS");
+        btnhapus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnhapusActionPerformed(evt);
+            }
+        });
+
+        btncetak.setText("CETAK");
+        btncetak.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btncetakActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addGap(41, 41, 41)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addComponent(btnbayar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnhapus)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btncetak))
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel60)
+                            .addComponent(jLabel59)
+                            .addComponent(jLabel58)
+                            .addComponent(jLabel57))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtangsuran35, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE)
+                            .addComponent(txtpembayaran5)
+                            .addComponent(txtsisa5)
+                            .addComponent(txtketerangan5))))
+                .addContainerGap(46, Short.MAX_VALUE))
+        );
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel60)
+                    .addComponent(txtangsuran35, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel57)
+                    .addComponent(txtpembayaran5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel58)
+                    .addComponent(txtsisa5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel59)
+                    .addComponent(txtketerangan5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnbayar)
+                    .addComponent(btnhapus)
+                    .addComponent(btncetak))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel5.setBackground(new java.awt.Color(255, 255, 204));
+        jPanel5.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, java.awt.Color.white, java.awt.Color.white));
+
+        jLabel51.setText("Kode Kredit");
+
+        txtkodekredit5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtkodekredit5ActionPerformed(evt);
+            }
+        });
+        txtkodekredit5.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtkodekredit5KeyPressed(evt);
+            }
+        });
+
+        jLabel52.setText("Kode Anggota");
+
+        txtkodeanggota5.setEditable(false);
+        txtkodeanggota5.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtkodeanggota5KeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtkodeanggota5KeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtkodeanggota5KeyTyped(evt);
+            }
+        });
+
+        jLabel53.setText("Kode Barang");
+
+        txtkodebarang5.setEditable(false);
+        txtkodebarang5.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtkodebarang5KeyPressed(evt);
+            }
+        });
+
+        jLabel55.setFont(new java.awt.Font("Tahoma", 2, 11)); // NOI18N
+        jLabel55.setText("Angsuran yang diambil ");
+
+        jLabel56.setFont(new java.awt.Font("Tahoma", 2, 11)); // NOI18N
+        jLabel56.setText("Angsuran yang telah dibayar");
+
+        txtangsuran5.setEditable(false);
+        txtangsuran5.setBackground(new java.awt.Color(204, 204, 204));
+
+        txtangsuran25.setEditable(false);
+        txtangsuran25.setBackground(new java.awt.Color(204, 204, 204));
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(29, 29, 29)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jPanel5Layout.createSequentialGroup()
+                            .addComponent(jLabel53)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtkodebarang5, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel5Layout.createSequentialGroup()
+                            .addComponent(jLabel52)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtkodeanggota5, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel5Layout.createSequentialGroup()
+                            .addComponent(jLabel51)
+                            .addGap(29, 29, 29)
+                            .addComponent(txtkodekredit5, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel56)
+                            .addComponent(jLabel55))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtangsuran5, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtangsuran25, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(141, Short.MAX_VALUE))
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel51)
+                    .addComponent(txtkodekredit5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel52)
+                    .addComponent(txtkodeanggota5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel53)
+                    .addComponent(txtkodebarang5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(27, 27, 27)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel55)
+                    .addComponent(txtangsuran5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel56)
+                    .addComponent(txtangsuran25, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jLabel50.setText("Kode Bayar");
+
+        txtkodebayar5.setEditable(false);
+        txtkodebayar5.setBackground(new java.awt.Color(255, 255, 204));
+        txtkodebayar5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtkodebayar5ActionPerformed(evt);
+            }
+        });
+        txtkodebayar5.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtkodebayar5KeyPressed(evt);
+            }
+        });
+
+        jLabel54.setText("Tanggal Pembayaran  :");
+
+        tanggall.setText(" ");
+
+        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
+        jPanel8.setLayout(jPanel8Layout);
+        jPanel8Layout.setHorizontalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addComponent(jLabel50)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtkodebayar5, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(26, 26, 26)
+                        .addComponent(jLabel54)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tanggall, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(23, 23, 23))
+        );
+        jPanel8Layout.setVerticalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel50)
+                    .addComponent(txtkodebayar5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel54)
+                    .addComponent(tanggall))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(78, Short.MAX_VALUE))
+        );
+
+        tabelkredit.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "KODE BAYAR", "Tgl Bayar", "Kode Kredit", "Cicilan", "Bayar", "Sisa", "Keterangan", "Angsuran"
+            }
+        ));
+        tabelkredit.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabelkreditMouseClicked(evt);
+            }
+        });
+        jScrollPane6.setViewportView(tabelkredit);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(36, 36, 36)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel10)
+                    .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane6))
+                .addContainerGap(299, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(47, 47, 47)
+                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(35, 35, 35)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void tabelkreditMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelkreditMouseClicked
+        int baris = tabelkredit.rowAtPoint(evt.getPoint());
+        String kodebayar = tabelkredit.getValueAt(baris, 1).toString();
+        txtkodebayar5.setText(kodebayar);
+
+        String tanggal = tabelkredit.getValueAt(baris, 2).toString();
+        tanggall.setText(tanggal);
+
+        ///
+        String kodekredit = tabelkredit.getValueAt(baris, 3).toString();
+        txtkodekredit5.setText(kodekredit);
+
+        String cicilan = tabelkredit.getValueAt(baris, 4).toString();
+        txtangsuran5.setText(cicilan);
+
+        String pembayaran = tabelkredit.getValueAt(baris, 5).toString();
+        txtpembayaran5.setText(pembayaran);
+
+        String sisa = tabelkredit.getValueAt(baris, 6).toString();
+        txtsisa5.setText(sisa);
+
+        String keterangan = tabelkredit.getValueAt(baris, 7).toString();
+        txtketerangan5.setText(keterangan);
+
+        String angsuran = tabelkredit.getValueAt(baris, 8).toString();
+        txtangsuran25.setText(angsuran);
+        
+        btnbayar.setEnabled(false);
+        btnhapus.setEnabled(true);
+        btncetak.setEnabled(true);
+    }//GEN-LAST:event_tabelkreditMouseClicked
+
+    private void txtkodebayar5KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtkodebayar5KeyPressed
+
+    }//GEN-LAST:event_txtkodebayar5KeyPressed
+
+    private void txtkodebayar5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtkodebayar5ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtkodebayar5ActionPerformed
+
+     private void tampildatakredit1(String key) {try{
+       // Statement stt=Connection.createStatement();
+    Connection conn=(Connection)koneksi.configDB();
+            Statement stt=conn.createStatement();
+           rskredit=stt.executeQuery("SELECT * from tenor WHERE kode_kredit LIKE '%"+key+"%'");  
+            if(rskredit.next()){
+                
+                   
+        String kodeanggota_kredit = rskredit.getString("kode_agt");
+        txtkodeanggota5.setText(kodeanggota_kredit);
+        
+        String kodebarang_kredit = rskredit.getString("kode_brg");
+        txtkodebarang5.setText(kodebarang_kredit);
+        
+        String lamacicilan_kredit = rskredit.getString("lama_cicilan");
+        txtangsuran5.setText(lamacicilan_kredit);
+        
+        
+        Integer sisa_kredit = rskredit.getInt("sisa");
+        txtsisa5.setText(nf.format(sisa_kredit));
+        
+        String keterangan = rskredit.getString("keterangan");
+        txtketerangan5.setText(keterangan);
+        
+        String angsuran = rskredit.getString("angsuran");
+            txtangsuran25.setText(angsuran);
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "Data Tidak Ada");
+            }
+    }catch (Exception ex) {
+        System.err.println(ex.getMessage());
+        }
+    
+    }
+    
+ private void tampilDataAnggota(String key) {
+    }
+ 
+ private void tampilDataBarang(String key) {
+    }
+     
+
+    private void txtkodekredit5KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtkodekredit5KeyPressed
+
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+
+            String key=txtkodekredit5.getText();
+            System.out.println(key);
+
+            if(key!=""){
+                tampildatakredit1(key);
+                
+
+            }else{
+                JOptionPane.showMessageDialog(null, "Data Tidak Ada");
+            }
+            
+            angsuran = Integer.parseInt(txtangsuran25.getText());
+            angsuran_next = angsuran + 1;
+            txtangsuran35.setText(String.valueOf(angsuran_next));
+        }
+    }//GEN-LAST:event_txtkodekredit5KeyPressed
+
+    private void txtkodekredit5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtkodekredit5ActionPerformed
+txtpembayaran5.grabFocus();
+    }//GEN-LAST:event_txtkodekredit5ActionPerformed
+
+    private void btnhapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnhapusActionPerformed
+        if (!tabelkredit.getSelectionModel().isSelectionEmpty()){
+        try{
+            String sql = "DELETE FROM kredit WHERE kode_bayar='"+txtkodebayar5.getText()+"'";
+            java.sql.Connection conn = (Connection)koneksi.configDB();
+            java.sql.PreparedStatement pstm = conn.prepareStatement(sql);
+            pstm.execute();
+            JOptionPane.showMessageDialog(null, "Hapus Data Berhasil...");
+        }catch(HeadlessException | SQLException e){
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+        }else{
+            JOptionPane.showMessageDialog(this, "Pilih data yang akan di hapus");
+        }
+        tampil_kredit();
+        kosongkan_form();
+    }//GEN-LAST:event_btnhapusActionPerformed
+
+    private void btnbayarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnbayarActionPerformed
+
+        String tampilan ="dd-MM-yyyy";
+        SimpleDateFormat fm = new SimpleDateFormat(tampilan);
+        
+        kodebayar5=String.valueOf(txtkodebayar5.getText());
+        kodekredit5=String.valueOf(txtkodekredit5.getText());
+        pembayaran=Integer.parseInt(txtpembayaran5.getText());
+        sisa = Integer.parseInt(txtsisa5.getText().replace(".", ""));
+        angsuran_next=Integer.parseInt(txtangsuran35.getText());
+        sisa2=sisa-pembayaran;
+        
+        if (sisa2 >= 100) {
+            keterangan = "Belum Lunas";
+        }else{
+            keterangan = "Lunas";
+        }
+
+            try{
+                String sql = "INSERT INTO kredit VALUES('"+kodebayar5+"','"+tanggall.getText()+"','"+kodekredit5+"','"+txtkodeanggota5.getText()+"','"+txtkodebarang5.getText()+"','"+txtangsuran5.getText()+"','"+pembayaran+"','"+sisa2+"','"+keterangan+"','"+angsuran_next+"')";
+                java.sql.Connection conn = (Connection)koneksi.configDB();
+                java.sql.PreparedStatement pstm = conn.prepareStatement(sql);
+                pstm.execute();
+                JOptionPane.showMessageDialog(null, "Pembayaran Berhasil..");
+
+            }catch(HeadlessException | SQLException e){
+                JOptionPane.showMessageDialog(this, e.getMessage());
+            }
+                tampil_kredit();
+                kosongkan_form();
+                otomatis();
+                setTanggal();
+
+            try{
+                String sql = "UPDATE tenor SET angsuran='"+angsuran_next+"',sisa='"+sisa2+"',keterangan='"+keterangan+"' WHERE kode_kredit = '"+kodekredit5+"'";
+                java.sql.Connection conn = (Connection)koneksi.configDB();
+                java.sql.PreparedStatement pstm = conn.prepareStatement(sql);
+                pstm.execute();
+
+
+            }catch(HeadlessException | SQLException e){
+                JOptionPane.showMessageDialog(this, e.getMessage());
+            }
+        
+      btncetak.setEnabled(true);
+      btnhapus.setEnabled(true);
+    }//GEN-LAST:event_btnbayarActionPerformed
+
+    private void btncetakActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btncetakActionPerformed
+         
+         
+        if (!tabelkredit.getSelectionModel().isSelectionEmpty()){
+            int getRow = tabelkredit.getSelectedRow();
+            int modelRow = tabelkredit.convertRowIndexToModel(getRow);
+            String getId =tabelkredit.getModel().getValueAt(modelRow, 3).toString();
+         
+            try{
+                String path="src/report/Kwitansi_Kredit.jasper";
+                HashMap parameter = new HashMap();
+                java.sql.Connection conn = (Connection)koneksi.configDB();
+                parameter.put("kode", getId);
+                JasperPrint print = JasperFillManager.fillReport(path, parameter, conn);
+                JasperViewer.viewReport(print, false);
+            }catch(Exception e){
+                JOptionPane.showMessageDialog(null,"dokumen tidak ada"+e);
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "Pilih baris data terlebih dahulu!");
+        }
+        kosongkan_form();
+                otomatis();
+                setTanggal();
+        btnbayar.setEnabled(true);
+    }//GEN-LAST:event_btncetakActionPerformed
+
+    private void txtkodeanggota5KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtkodeanggota5KeyPressed
+ if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+
+            String key=txtkodeanggota5.getText();
+            System.out.println(key);
+
+            if(key!=""){
+                tampilDataAnggota(key);
+                
+            }else{
+                JOptionPane.showMessageDialog(null, "Data Tidak Ada");
+            }
+            
+        }
+            }//GEN-LAST:event_txtkodeanggota5KeyPressed
+
+    private void txtkodebarang5KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtkodebarang5KeyPressed
+       if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+
+            String key=txtkodebarang5.getText();
+            System.out.println(key);
+
+            if(key!=""){
+                tampilDataBarang(key);
+                
+            }else{
+                JOptionPane.showMessageDialog(null, "Data Tidak Ada");
+            }
+            
+        }
+    }//GEN-LAST:event_txtkodebarang5KeyPressed
+
+    private void txtkodeanggota5KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtkodeanggota5KeyReleased
+            
+
+    }//GEN-LAST:event_txtkodeanggota5KeyReleased
+
+    private void txtkodeanggota5KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtkodeanggota5KeyTyped
+       
+    }//GEN-LAST:event_txtkodeanggota5KeyTyped
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnbayar;
+    private javax.swing.JButton btncetak;
+    private javax.swing.JButton btnhapus;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel50;
+    private javax.swing.JLabel jLabel51;
+    private javax.swing.JLabel jLabel52;
+    private javax.swing.JLabel jLabel53;
+    private javax.swing.JLabel jLabel54;
+    private javax.swing.JLabel jLabel55;
+    private javax.swing.JLabel jLabel56;
+    private javax.swing.JLabel jLabel57;
+    private javax.swing.JLabel jLabel58;
+    private javax.swing.JLabel jLabel59;
+    private javax.swing.JLabel jLabel60;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
+    private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JTable tabelkredit;
+    private javax.swing.JLabel tanggall;
+    private javax.swing.JTextField txtangsuran25;
+    private javax.swing.JTextField txtangsuran35;
+    private javax.swing.JTextField txtangsuran5;
+    private javax.swing.JTextField txtketerangan5;
+    private javax.swing.JTextField txtkodeanggota5;
+    private javax.swing.JTextField txtkodebarang5;
+    private javax.swing.JTextField txtkodebayar5;
+    private javax.swing.JTextField txtkodekredit5;
+    private javax.swing.JTextField txtpembayaran5;
+    private javax.swing.JTextField txtsisa5;
+    // End of variables declaration//GEN-END:variables
+}

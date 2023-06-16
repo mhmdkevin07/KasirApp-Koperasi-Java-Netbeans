@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="70870d2d-27ee-4d96-bf8e-99513857b8f3">
+	<property name="ireport.zoom" value="1.7715610000000017"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="kode" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     tenor.`kode_kredit` AS tenor_kode_kredit,
+     tenor.`kode_agt` AS tenor_kode_agt,
+     tenor.`kode_brg` AS tenor_kode_brg,
+     tenor.`lama_cicilan` AS tenor_lama_cicilan,
+     tenor.`uang_muka` AS tenor_uang_muka,
+     tenor.`tanggal_kredit` AS tenor_tanggal_kredit,
+     tenor.`keterangan` AS tenor_keterangan,
+     tenor.`total` AS tenor_total,
+     tenor.`sisa` AS tenor_sisa,
+     tenor.`bunga` AS tenor_bunga,
+     tenor.`cicilan` AS tenor_cicilan,
+     tenor.`angsuran` AS tenor_angsuran,
+     anggota.`kode_agt` AS anggota_kode_agt,
+     anggota.`nama_agt` AS anggota_nama_agt,
+     anggota.`jabatan_agt` AS anggota_jabatan_agt,
+     anggota.`divisi` AS anggota_divisi,
+     barang.`kode_brg` AS barang_kode_brg,
+     barang.`nama` AS barang_nama,
+     barang.`warna` AS barang_warna
+FROM
+     `tenor` tenor INNER JOIN `anggota` anggota ON tenor.`kode_agt` = anggota.`kode_agt`
+     INNER JOIN `barang` barang ON tenor.`kode_brg` = barang.`kode_brg`
+WHERE
+kode_kredit = $P{kode}]]>
+	</queryString>
+	<field name="tenor_kode_kredit" class="java.lang.String"/>
+	<field name="tenor_kode_agt" class="java.lang.String"/>
+	<field name="tenor_kode_brg" class="java.lang.String"/>
+	<field name="tenor_lama_cicilan" class="java.lang.String"/>
+	<field name="tenor_uang_muka" class="java.lang.Integer"/>
+	<field name="tenor_tanggal_kredit" class="java.lang.String"/>
+	<field name="tenor_keterangan" class="java.lang.String"/>
+	<field name="tenor_total" class="java.lang.Integer"/>
+	<field name="tenor_sisa" class="java.lang.Integer"/>
+	<field name="tenor_bunga" class="java.lang.Integer"/>
+	<field name="tenor_cicilan" class="java.lang.Integer"/>
+	<field name="tenor_angsuran" class="java.lang.String"/>
+	<field name="anggota_nama_agt" class="java.lang.String"/>
+	<field name="anggota_jabatan_agt" class="java.lang.String"/>
+	<field name="anggota_divisi" class="java.lang.String"/>
+	<field name="barang_nama" class="java.lang.String"/>
+	<field name="barang_warna" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="88" splitType="Stretch">
+			<line>
+				<reportElement uuid="bad55709-16ed-4506-b251-0dc4c1c6f6a2" x="-21" y="80" width="597" height="1"/>
+			</line>
+			<frame>
+				<reportElement uuid="20aa3c4f-1af2-4cee-838d-1a993be5b9d5" mode="Opaque" x="-20" y="-20" width="595" height="99" backcolor="#006699"/>
+				<staticText>
+					<reportElement uuid="c2e48c4f-da5f-4355-b5c8-944cfad2f911" x="155" y="11" width="276" height="30" forecolor="#FFFFFF"/>
+					<textElement textAlignment="Center">
+						<font size="20" isBold="true"/>
+					</textElement>
+					<text><![CDATA[KOPERASI DUTA USAHA]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="c2e48c4f-da5f-4355-b5c8-944cfad2f911" x="145" y="41" width="294" height="20" forecolor="#FFFFFF"/>
+					<textElement>
+						<font size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Jl. Taman Marga Satwa Raya, GG. Hankam, No.1 Ragunan]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="c2e48c4f-da5f-4355-b5c8-944cfad2f911" x="445" y="79" width="150" height="20" forecolor="#FFFFFF"/>
+					<textElement textAlignment="Center">
+						<font size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Bukti Pengajuan Kredit]]></text>
+				</staticText>
+				<image>
+					<reportElement uuid="7ac53be3-af35-4b30-b8e8-e1a7d067b5e2" x="71" y="9" width="84" height="60"/>
+					<imageExpression><![CDATA["C:\\Users\\Asus\\OneDrive\\Documents\\NetBeansProjects\\droplist\\src\\Main\\koperasi.png"]]></imageExpression>
+				</image>
+				<staticText>
+					<reportElement uuid="c2e48c4f-da5f-4355-b5c8-944cfad2f911" x="203" y="55" width="156" height="20" forecolor="#FFFFFF"/>
+					<textElement>
+						<font size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Pasar Minggu - Jakarta Selatan]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="71" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="02236c52-517c-4b34-bae9-3640d9f502ea" x="0" y="20" width="111" height="20"/>
+				<textElement/>
+				<text><![CDATA[Dari divisi]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="bdb836f4-8bdd-4880-9694-4d3203186e43" x="148" y="20" width="111" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{anggota_divisi}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="fcf82c3b-f034-4bf9-ab2c-b8c5dd506bf5" x="0" y="0" width="122" height="20"/>
+				<textElement/>
+				<text><![CDATA[Telah mengajukan kredit]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="9b00e08b-e07b-4213-b876-eb76f6260304" x="148" y="0" width="111" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{anggota_nama_agt}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="e78b4a24-4207-4c1a-8b96-dc73c21fee5a" x="0" y="40" width="111" height="20"/>
+				<textElement/>
+				<text><![CDATA[Jabatan]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="6abb094f-3de0-4d75-ba25-d212aaa773a4" x="148" y="40" width="111" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{anggota_jabatan_agt}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="5598f188-3202-46e3-b0d5-8ff9d6eb425d" x="348" y="20" width="130" height="20"/>
+				<textElement/>
+				<text><![CDATA[Tanggal Pengajuan Kredit]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="4e5b6eed-8cd1-4397-ac99-ebfaa66e1ad9" x="494" y="20" width="69" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{tenor_tanggal_kredit}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="bad55709-16ed-4506-b251-0dc4c1c6f6a2" x="-25" y="70" width="609" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="43f9a5b3-3ab9-4df2-824d-abeae630666b" x="122" y="20" width="16" height="20"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="43f9a5b3-3ab9-4df2-824d-abeae630666b" x="122" y="0" width="16" height="20"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="43f9a5b3-3ab9-4df2-824d-abeae630666b" x="122" y="40" width="16" height="20"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="43f9a5b3-3ab9-4df2-824d-abeae630666b" x="478" y="20" width="16" height="20"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="24" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="7d3a2b91-7e2b-403e-8b2d-311b27d2e5b2" mode="Opaque" x="202" y="0" width="111" height="20" forecolor="#006699" backcolor="#E6E6E6"/>
+				<textElement textAlignment="Center">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Warna]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="7d3a2b91-7e2b-403e-8b2d-311b27d2e5b2" mode="Opaque" x="91" y="0" width="111" height="20" forecolor="#006699" backcolor="#E6E6E6"/>
+				<textElement textAlignment="Center">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nama Barang]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="7d3a2b91-7e2b-403e-8b2d-311b27d2e5b2" mode="Opaque" x="-20" y="0" width="111" height="20" forecolor="#006699" backcolor="#E6E6E6"/>
+				<textElement textAlignment="Center">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Kode Barang]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="7d3a2b91-7e2b-403e-8b2d-311b27d2e5b2" mode="Opaque" x="313" y="0" width="111" height="20" forecolor="#006699" backcolor="#E6E6E6"/>
+				<textElement textAlignment="Center">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Lama Cicilan]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="7d3a2b91-7e2b-403e-8b2d-311b27d2e5b2" mode="Opaque" x="424" y="0" width="151" height="20" forecolor="#006699" backcolor="#E6E6E6"/>
+				<textElement textAlignment="Center">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Uang Muka]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="25" splitType="Stretch">
+			<textField>
+				<reportElement uuid="a7af7751-5b17-4053-9a05-27ba8977b1d4" x="-10" y="0" width="101" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{tenor_kode_brg}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="f3691644-01b7-4cf2-9d4b-b3913cf1ab59" x="313" y="0" width="111" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{tenor_lama_cicilan}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement uuid="0093662b-aeba-44ba-b603-9b76df8fa725" x="424" y="0" width="148" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{tenor_uang_muka}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="bb8bdf07-d400-4673-aaea-006a88bc87ba" x="91" y="0" width="111" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{barang_nama}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="90f415d9-685b-46fe-a892-23b9eee6d6a5" x="202" y="0" width="111" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{barang_warna}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="522b31c4-30f1-41e2-8d69-74f78735166b" x="-20" y="23" width="595" height="1"/>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="36" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="321" splitType="Stretch">
+			<textField pattern="#,##0">
+				<reportElement uuid="bee32348-19b6-4389-ac17-ac575c567950" x="230" y="34" width="100" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tenor_total}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement uuid="cc4ecb49-49ea-4fb6-9f0d-56876774baed" x="437" y="14" width="69" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tenor_sisa}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="9608cbb0-3c9f-4abb-a0f8-9fd4caa351d3" x="148" y="34" width="69" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Kredit]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="fe640be1-e143-4c8a-8000-b72c098fe57d" x="341" y="14" width="83" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sisa Pembayaran]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="06d827ab-fce5-4680-a0b6-507fca72ed41" x="341" y="34" width="83" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cicilan /Bulan]]></text>
+			</staticText>
+			<textField pattern="#,##0">
+				<reportElement uuid="006b8679-06c9-4e76-b3e6-0c521cb2cbfe" x="437" y="34" width="69" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tenor_cicilan}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement uuid="b4a1443d-4e47-4348-8fe2-7c28edd9cab8" x="230" y="14" width="100" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tenor_bunga}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="9608cbb0-3c9f-4abb-a0f8-9fd4caa351d3" x="148" y="14" width="69" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Bunga]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="9608cbb0-3c9f-4abb-a0f8-9fd4caa351d3" x="217" y="14" width="13" height="20"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="9608cbb0-3c9f-4abb-a0f8-9fd4caa351d3" x="217" y="34" width="13" height="20"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="9608cbb0-3c9f-4abb-a0f8-9fd4caa351d3" x="424" y="14" width="13" height="20"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="9608cbb0-3c9f-4abb-a0f8-9fd4caa351d3" x="424" y="34" width="13" height="20"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<frame>
+				<reportElement uuid="c9c9c7e8-3c20-4104-bc90-3f2bf7063d6d" mode="Opaque" x="-20" y="0" width="595" height="10" backcolor="#006699"/>
+			</frame>
+			<line>
+				<reportElement uuid="a4d81f7b-5a88-4cd1-a9f6-be5b87268c50" x="-20" y="54" width="595" height="1"/>
+			</line>
+			<line>
+				<reportElement uuid="a4d81f7b-5a88-4cd1-a9f6-be5b87268c50" x="-20" y="10" width="595" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="5139910d-91c3-4341-9dd7-dcd8bf7691a5" x="390" y="198" width="54" height="20"/>
+				<textElement/>
+				<text><![CDATA[Suherman]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="5139910d-91c3-4341-9dd7-dcd8bf7691a5" x="390" y="78" width="53" height="20"/>
+				<textElement/>
+				<text><![CDATA[Jakarta,]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="5139910d-91c3-4341-9dd7-dcd8bf7691a5" x="390" y="218" width="103" height="20"/>
+				<textElement/>
+				<text><![CDATA[Mayor Inf NRP 589799]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="5139910d-91c3-4341-9dd7-dcd8bf7691a5" x="390" y="98" width="61" height="20"/>
+				<textElement/>
+				<text><![CDATA[Mengetahui,]]></text>
+			</staticText>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement uuid="5c358160-79d1-4fd8-a920-0e15f5258140" x="428" y="78" width="133" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("dd MMMM yyyy", new Locale("id", "ID")).format(new Date())]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="5139910d-91c3-4341-9dd7-dcd8bf7691a5" x="390" y="118" width="88" height="20"/>
+				<textElement/>
+				<text><![CDATA[Kepala Koperasi]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>
